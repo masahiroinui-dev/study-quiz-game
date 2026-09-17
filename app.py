@@ -34,33 +34,33 @@ CHARACTERS = [
 # パーツショップ定義
 SHOP_ITEMS = {
     "head": [
-        {"id": "panda_h1", "char_id": "panda", "name": "👑 ぱんだのあたま", "price": 80, "file": "head.jpg"},
-        {"id": "kappa_h1", "char_id": "kappa", "name": "🥒 かっぱのあたま", "price": 80, "file": "head.jpg"}
+        {"id": "panda_h1", "char_id": "panda", "name": "👑 ぱんだのあたま", "price": 80, "file": "head"},
+        {"id": "kappa_h1", "char_id": "kappa", "name": "🥒 かっぱのあたま", "price": 80, "file": "head"}
     ],
     "body": [
-        {"id": "panda_b1", "char_id": "panda", "name": "🥋 ぱんだのからだ", "price": 80, "file": "body.jpg"},
-        {"id": "broc_b1", "char_id": "broccoli", "name": "🥦 ぶろっこりのからだ", "price": 80, "file": "body.jpg"},
-        {"id": "kappa_b1", "char_id": "kappa", "name": "🥒 かっぱのからだ", "price": 80, "file": "body.jpg"}
+        {"id": "panda_b1", "char_id": "panda", "name": "🥋 ぱんだのからだ", "price": 80, "file": "body"},
+        {"id": "broc_b1", "char_id": "broccoli", "name": "🥦 ぶろっこりのからだ", "price": 80, "file": "body"},
+        {"id": "kappa_b1", "char_id": "kappa", "name": "🥒 かっぱのからだ", "price": 80, "file": "body"}
     ],
     "right_hand": [
-        {"id": "panda_rh1", "char_id": "panda", "name": "⚔️ ぱんだのみぎて", "price": 50, "file": "right_hand.jpg"},
-        {"id": "broc_rh1", "char_id": "broccoli", "name": "🥊 ぶろっこりのみぎて", "price": 50, "file": "right_hand.jpg"},
-        {"id": "kappa_rh1", "char_id": "kappa", "name": "🥒 かっぱのみぎて", "price": 50, "file": "right_hand.jpg"}
+        {"id": "panda_rh1", "char_id": "panda", "name": "⚔️ ぱんだのみぎて", "price": 50, "file": "right_hand"},
+        {"id": "broc_rh1", "char_id": "broccoli", "name": "🥊 ぶろっこりのみぎて", "price": 50, "file": "right_hand"},
+        {"id": "kappa_rh1", "char_id": "kappa", "name": "🥒 かっぱのみぎて", "price": 50, "file": "right_hand"}
     ],
     "left_hand": [
-        {"id": "panda_lh1", "char_id": "panda", "name": "🛡️ ぱんだのひだりて", "price": 50, "file": "left_hand.jpg"},
-        {"id": "broc_lh1", "char_id": "broccoli", "name": "🥊 ぶろっこりのひだりて", "price": 50, "file": "left_hand.jpg"},
-        {"id": "kappa_lh1", "char_id": "kappa", "name": "🥒 かっぱのひだりて", "price": 50, "file": "left_hand.jpg"}
+        {"id": "panda_lh1", "char_id": "panda", "name": "🛡️ ぱんだのひだりて", "price": 50, "file": "left_hand"},
+        {"id": "broc_lh1", "char_id": "broccoli", "name": "🥊 ぶろっこりのひだりて", "price": 50, "file": "left_hand"},
+        {"id": "kappa_lh1", "char_id": "kappa", "name": "🥒 かっぱのひだりて", "price": 50, "file": "left_hand"}
     ],
     "right_leg": [
-        {"id": "panda_rl1", "char_id": "panda", "name": "🦵 ぱんだのみぎあし", "price": 50, "file": "right_leg.jpg"},
-        {"id": "broc_rl1", "char_id": "broccoli", "name": "🦵 ぶろっこりのみぎあし", "price": 50, "file": "right_leg.jpg"},
-        {"id": "kappa_rl1", "char_id": "kappa", "name": "🥒 かっぱのみぎあし", "price": 50, "file": "right_leg.jpg"}
+        {"id": "panda_rl1", "char_id": "panda", "name": "🦵 ぱんだのみぎあし", "price": 50, "file": "right_leg"},
+        {"id": "broc_rl1", "char_id": "broccoli", "name": "🦵 ぶろっこりのみぎあし", "price": 50, "file": "right_leg"},
+        {"id": "kappa_rl1", "char_id": "kappa", "name": "🥒 かっぱのみぎあし", "price": 50, "file": "right_leg"}
     ],
     "left_leg": [
-        {"id": "panda_ll1", "char_id": "panda", "name": "🦵 ぱんだのひだりあし", "price": 50, "file": "left_leg.jpg"},
-        {"id": "broc_ll1", "char_id": "broccoli", "name": "🦵 ぶろっこりのひだりあし", "price": 50, "file": "left_leg.jpg"},
-        {"id": "kappa_ll1", "char_id": "kappa", "name": "🥒 かっぱのひだりあし", "price": 50, "file": "left_leg.jpg"}
+        {"id": "panda_ll1", "char_id": "panda", "name": "🦵 ぱんだのひだりあし", "price": 50, "file": "left_leg"},
+        {"id": "broc_ll1", "char_id": "broccoli", "name": "🦵 ぶろっこりのひだりあし", "price": 50, "file": "left_leg"},
+        {"id": "kappa_ll1", "char_id": "kappa", "name": "🥒 かっぱのひだりあし", "price": 50, "file": "left_leg"}
     ]
 }
 
@@ -86,17 +86,32 @@ def save_user_data_to_browser(data):
 if "user_data" not in st.session_state:
     st.session_state.user_data = load_user_data_from_browser()
 
-# --- 画像ファイルを柔軟に検索する補助関数（.jpg / .JPG / .png 対応） ---
+# --- 画像ファイルを柔軟に検索する補助関数（拡張子・大文字小文字に対応） ---
 def find_existing_image_path(*path_segments):
+    # パス情報を結合
     base_path = os.path.join(*path_segments)
-    if os.path.exists(base_path):
+    
+    # 1. 渡されたそのままのパスが存在すればそれを返す
+    if os.path.exists(base_path) and os.path.isfile(base_path):
         return base_path
     
     root, ext = os.path.splitext(base_path)
-    for alt_ext in ['.jpg', '.JPG', '.jpeg', '.JPEG', '.png', '.PNG']:
-        alt_path = root + alt_ext
-        if os.path.exists(alt_path):
+    
+    # 2. 拡張子のバリエーションを全検索
+    extensions = ['', '.jpg', '.JPG', '.jpeg', '.JPEG', '.png', '.PNG', '.webp', '.WEBP']
+    for e in extensions:
+        alt_path = root + e
+        if os.path.exists(alt_path) and os.path.isfile(alt_path):
             return alt_path
+            
+    # 3. フォルダが存在する場合、ファイル名の前方一致で検索（大文字小文字ズレ対策）
+    dirname = os.path.dirname(base_path)
+    filename = os.path.basename(root).lower()
+    if os.path.exists(dirname) and os.path.isdir(dirname):
+        for f in os.listdir(dirname):
+            if os.path.splitext(f)[0].lower() == filename:
+                return os.path.join(dirname, f)
+                
     return None
 
 # --- 画面全体の背景画像設定関数 ---
@@ -426,13 +441,13 @@ elif mode == "おもちゃ箱（キャラ保存・図鑑）":
     
     if total_needed_count > 0 and owned_count == total_needed_count:
         char_name = st.text_input("キャラクターの登録名", value=selected_char_info["name"])
-        complete_img_path = find_existing_image_path(IMAGE_DIR, target_char_id, "complete.jpg")
+        complete_img_path = find_existing_image_path(IMAGE_DIR, target_char_id, "complete")
         
         st.write("### 【完成イラスト】")
         if complete_img_path:
             st.image(complete_img_path, caption=f"完成カード: {char_name}", width=350)
         else:
-            st.warning(f"※画像ファイルが見つかりません: images/{target_char_id}/complete.jpg")
+            st.warning(f"※画像ファイルが見つかりません: images/{target_char_id}/complete")
             
         if st.button("この完成品を図鑑に保存！"):
             new_char = {
