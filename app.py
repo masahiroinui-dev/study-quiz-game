@@ -24,36 +24,43 @@ IMAGE_DIR = os.path.join(BASE_DIR, "images")      # 画像フォルダのパス
 QUIZ_SHOP_BG = "bg1.jpg"   # クイズ・ショップ画面用背景
 COMPLETED_BG = "bg2.jpg"   # おもちゃ箱画面用背景
 
-# キャラクター定義（ぱんだ、ぶろっこり）
+# キャラクター定義（ぱんだ、ぶろっこり、かっぱ）
 CHARACTERS = [
     {"id": "panda", "name": "ぱんだ"},
-    {"id": "broccoli", "name": "ぶろっこり"}
+    {"id": "broccoli", "name": "ぶろっこり"},
+    {"id": "kappa", "name": "かっぱ"}
 ]
 
 # パーツショップ定義
 SHOP_ITEMS = {
     "head": [
-        {"id": "panda_h1", "char_id": "panda", "name": "👑 ぱんだのあたま", "price": 80, "file": "head.jpg"}
+        {"id": "panda_h1", "char_id": "panda", "name": "👑 ぱんだのあたま", "price": 80, "file": "head.jpg"},
+        {"id": "kappa_h1", "char_id": "kappa", "name": "🥒 かっぱのあたま", "price": 80, "file": "head.jpg"}
     ],
     "body": [
         {"id": "panda_b1", "char_id": "panda", "name": "🥋 ぱんだのからだ", "price": 80, "file": "body.jpg"},
-        {"id": "broc_b1", "char_id": "broccoli", "name": "🥦 ぶろっこりのからだ", "price": 80, "file": "body.jpg"}
+        {"id": "broc_b1", "char_id": "broccoli", "name": "🥦 ぶろっこりのからだ", "price": 80, "file": "body.jpg"},
+        {"id": "kappa_b1", "char_id": "kappa", "name": "🥒 かっぱのからだ", "price": 80, "file": "body.jpg"}
     ],
     "right_hand": [
         {"id": "panda_rh1", "char_id": "panda", "name": "⚔️ ぱんだのみぎて", "price": 50, "file": "right_hand.jpg"},
-        {"id": "broc_rh1", "char_id": "broccoli", "name": "🥊 ぶろっこりのみぎて", "price": 50, "file": "right_hand.jpg"}
+        {"id": "broc_rh1", "char_id": "broccoli", "name": "🥊 ぶろっこりのみぎて", "price": 50, "file": "right_hand.jpg"},
+        {"id": "kappa_rh1", "char_id": "kappa", "name": "🥒 かっぱのみぎて", "price": 50, "file": "right_hand.jpg"}
     ],
     "left_hand": [
         {"id": "panda_lh1", "char_id": "panda", "name": "🛡️ ぱんだのひだりて", "price": 50, "file": "left_hand.jpg"},
-        {"id": "broc_lh1", "char_id": "broccoli", "name": "🥊 ぶろっこりのひだりて", "price": 50, "file": "left_hand.jpg"}
+        {"id": "broc_lh1", "char_id": "broccoli", "name": "🥊 ぶろっこりのひだりて", "price": 50, "file": "left_hand.jpg"},
+        {"id": "kappa_lh1", "char_id": "kappa", "name": "🥒 かっぱのひだりて", "price": 50, "file": "left_hand.jpg"}
     ],
     "right_leg": [
         {"id": "panda_rl1", "char_id": "panda", "name": "🦵 ぱんだのみぎあし", "price": 50, "file": "right_leg.jpg"},
-        {"id": "broc_rl1", "char_id": "broccoli", "name": "🦵 ぶろっこりのみぎあし", "price": 50, "file": "right_leg.jpg"}
+        {"id": "broc_rl1", "char_id": "broccoli", "name": "🦵 ぶろっこりのみぎあし", "price": 50, "file": "right_leg.jpg"},
+        {"id": "kappa_rl1", "char_id": "kappa", "name": "🥒 かっぱのみぎあし", "price": 50, "file": "right_leg.jpg"}
     ],
     "left_leg": [
         {"id": "panda_ll1", "char_id": "panda", "name": "🦵 ぱんだのひだりあし", "price": 50, "file": "left_leg.jpg"},
-        {"id": "broc_ll1", "char_id": "broccoli", "name": "🦵 ぶろっこりのひだりあし", "price": 50, "file": "left_leg.jpg"}
+        {"id": "broc_ll1", "char_id": "broccoli", "name": "🦵 ぶろっこりのひだりあし", "price": 50, "file": "left_leg.jpg"},
+        {"id": "kappa_ll1", "char_id": "kappa", "name": "🥒 かっぱのひだりあし", "price": 50, "file": "left_leg.jpg"}
     ]
 }
 
@@ -108,7 +115,7 @@ def set_full_screen_background(image_filename):
                 background-repeat: no-repeat;
                 background-attachment: fixed;
             }}
-            /* タブレット・スマホ等のダークモードでも文字色を黒に強制制御 */
+            /* テキスト全体の文字色を黒に固定 */
             .stApp, .stApp p, .stApp h1, .stApp h2, .stApp h3, .stApp span, .stMarkdown, .stTextArea, .stSelectbox, div[data-testid="stMetricValue"] {{
                 color: #000000 !important;
             }}
@@ -117,6 +124,21 @@ def set_full_screen_background(image_filename):
                 padding: 8px;
                 border-radius: 8px;
             }}
+            
+            /* ボタンの配色を明示的に指定（ダークモード対策） */
+            .stButton > button {{
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                border: 2px solid #333333 !important;
+                font-weight: bold !important;
+                border-radius: 8px !important;
+            }}
+            .stButton > button:hover {{
+                background-color: #f0f0f0 !important;
+                color: #000000 !important;
+                border-color: #000000 !important;
+            }}
+            
             div[data-testid="stAlert"] {{
                 background-color: rgba(255, 255, 255, 0.95) !important;
                 color: #000000 !important;
