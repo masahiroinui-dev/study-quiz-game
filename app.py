@@ -15,7 +15,10 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 # 設定パラメータ
 MAX_MISTAKES = 3          # 最大誤答数（3回）
 BASE_SCORE = 5            # 正解時の基本ポイント
-IMAGE_DIR = "images"      # 画像フォルダのパス
+
+# ★ パスのズレを防ぐため、app.pyのあるフォルダを基準にした絶対パスを設定
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+IMAGE_DIR = os.path.join(BASE_DIR, "images")      # 画像フォルダのパス
 
 # 背景画像パス
 QUIZ_SHOP_BG = "bg1.jpg"   # クイズ・ショップ画面用背景
@@ -117,8 +120,10 @@ def set_full_screen_background(image_filename):
 # --- A. クイズデータ読み込み関数 ---
 @st.cache_data
 def load_questions(filepath):
+    # 絶対パスでファイルを参照
+    csv_path = os.path.join(BASE_DIR, filepath)
     questions = []
-    with open(filepath, mode="r", encoding="utf-8-sig") as f:
+    with open(csv_path, mode="r", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for row in reader:
             questions.append(row)
@@ -206,22 +211,20 @@ if mode == "クイズに挑戦":
             st.session_state.score = 0
             st.session_state.combo = 0
             st.session_state.mistakes = 0
-            st.session_state.loop_count = 1  # ★ 周回数カウント初期化
+            st.session_state.loop_count = 1
             st.session_state.game_over = False
             st.session_state.answered = False
             st.session_state.pt_saved = False
             st.rerun()
 
     if "quiz_list" in st.session_state and st.session_state.quiz_list:
-        # ★ 誤答数が限界に達したときのみゲームオーバー
         if st.session_state.mistakes >= MAX_MISTAKES:
             st.session_state.game_over = True
 
-        # ★ 1周クリア時の自動周回（ループ）処理
         if not st.session_state.game_over and st.session_state.current_idx >= len(st.session_state.quiz_list):
             st.session_state.loop_count += 1
             st.session_state.current_idx = 0
-            random.shuffle(st.session_state.quiz_list)  # 周回ごとに再シャッフル
+            random.shuffle(st.session_state.quiz_list)
             st.toast(f"🎉 1周クリア！ {st.session_state.loop_count}周目に入ります！", icon="🔄")
 
         if not st.session_state.game_over:
