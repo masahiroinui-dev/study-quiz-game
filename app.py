@@ -95,9 +95,10 @@ def set_full_screen_background(image_filename):
                 background-repeat: no-repeat;
                 background-attachment: fixed;
             }}
+            /* 画像を白く塗りつぶさないようCSS調整 */
             .stMarkdown, .stTextArea, .stSelectbox, div[data-testid="stMetricValue"] {{
-                background-color: rgba(255, 255, 255, 0.9) !important;
-                padding: 10px;
+                background-color: rgba(255, 255, 255, 0.85) !important;
+                padding: 8px;
                 border-radius: 8px;
             }}
             div[data-testid="stAlert"] {{
@@ -120,7 +121,6 @@ def set_full_screen_background(image_filename):
 # --- A. クイズデータ読み込み関数 ---
 @st.cache_data
 def load_questions(filepath):
-    # 絶対パスでファイルを参照
     csv_path = os.path.join(BASE_DIR, filepath)
     questions = []
     with open(csv_path, mode="r", encoding="utf-8-sig") as f:
@@ -341,11 +341,13 @@ elif mode == "ショップ":
                     c_info = next((c for c in CHARACTERS if c["id"] == item["char_id"]), None)
                     if c_info: char_label = f"[{c_info['name']}] "
                 
+                # パスの生成と存在確認（安全な指定）
                 part_img_path = os.path.join(IMAGE_DIR, item["char_id"], item["file"])
+                
                 if os.path.exists(part_img_path):
                     st.image(part_img_path, width=120)
                 else:
-                    st.caption("※画像準備中")
+                    st.warning(f"※画像が見つかりません: images/{item['char_id']}/{item['file']}")
                 
                 st.write(f"**{char_label}{item['name']}**")
                 st.write(f"価格: {item['price']} Pt")
@@ -393,7 +395,7 @@ elif mode == "おもちゃ箱（キャラ保存・図鑑）":
         if os.path.exists(complete_img_path):
             st.image(complete_img_path, caption=f"完成カード: {char_name}", width=350)
         else:
-            st.warning(f"※画像ファイルが見つかりません: {complete_img_path}")
+            st.warning(f"※画像ファイルが見つかりません: images/{target_char_id}/complete.jpg")
             
         if st.button("この完成品を図鑑に保存！"):
             new_char = {
