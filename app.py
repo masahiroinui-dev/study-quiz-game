@@ -85,7 +85,6 @@ def find_existing_image_path(*path_segments):
     if os.path.exists(base_path):
         return base_path
     
-    # 拡張子の大文字・小文字・png等の違いを自動検知
     root, ext = os.path.splitext(base_path)
     for alt_ext in ['.jpg', '.JPG', '.jpeg', '.JPEG', '.png', '.PNG']:
         alt_path = root + alt_ext
@@ -108,6 +107,10 @@ def set_full_screen_background(image_filename):
                 background-position: center;
                 background-repeat: no-repeat;
                 background-attachment: fixed;
+            }}
+            /* タブレット・スマホ等のダークモードでも文字色を黒に強制制御 */
+            .stApp, .stApp p, .stApp h1, .stApp h2, .stApp h3, .stApp span, .stMarkdown, .stTextArea, .stSelectbox, div[data-testid="stMetricValue"] {{
+                color: #000000 !important;
             }}
             .stMarkdown, .stTextArea, .stSelectbox, div[data-testid="stMetricValue"] {{
                 background-color: rgba(255, 255, 255, 0.85) !important;
@@ -354,7 +357,6 @@ elif mode == "ショップ":
                     c_info = next((c for c in CHARACTERS if c["id"] == item["char_id"]), None)
                     if c_info: char_label = f"[{c_info['name']}] "
                 
-                # 自動判定付きでパスを検索
                 part_img_path = find_existing_image_path(IMAGE_DIR, item["char_id"], item["file"])
                 
                 if part_img_path:
