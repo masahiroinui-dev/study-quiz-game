@@ -79,10 +79,24 @@ def save_user_data_to_browser(data):
 if "user_data" not in st.session_state:
     st.session_state.user_data = load_user_data_from_browser()
 
+# --- 画像ファイルを柔軟に検索する補助関数（.jpg / .JPG / .png 対応） ---
+def find_existing_image_path(*path_segments):
+    base_path = os.path.join(*path_segments)
+    if os.path.exists(base_path):
+        return base_path
+    
+    # 拡張子の大文字・小文字・png等の違いを自動検知
+    root, ext = os.path.splitext(base_path)
+    for alt_ext in ['.jpg', '.JPG', '.jpeg', '.JPEG', '.png', '.PNG']:
+        alt_path = root + alt_ext
+        if os.path.exists(alt_path):
+            return alt_path
+    return None
+
 # --- 画面全体の背景画像設定関数 ---
 def set_full_screen_background(image_filename):
-    image_path = os.path.join(IMAGE_DIR, image_filename)
-    if os.path.exists(image_path):
+    image_path = find_existing_image_path(IMAGE_DIR, image_filename)
+    if image_path:
         with open(image_path, "rb") as image_file:
             encoded_string = base64.b64encode(image_file.read()).decode()
         st.markdown(
@@ -95,7 +109,6 @@ def set_full_screen_background(image_filename):
                 background-repeat: no-repeat;
                 background-attachment: fixed;
             }}
-            /* 画像を白く塗りつぶさないようCSS調整 */
             .stMarkdown, .stTextArea, .stSelectbox, div[data-testid="stMetricValue"] {{
                 background-color: rgba(255, 255, 255, 0.85) !important;
                 padding: 8px;
@@ -341,10 +354,10 @@ elif mode == "ショップ":
                     c_info = next((c for c in CHARACTERS if c["id"] == item["char_id"]), None)
                     if c_info: char_label = f"[{c_info['name']}] "
                 
-                # パスの生成と存在確認（安全な指定）
-                part_img_path = os.path.join(IMAGE_DIR, item["char_id"], item["file"])
+                # 自動判定付きでパスを検索
+                part_img_path = find_existing_image_path(IMAGE_DIR, item["char_id"], item["file"])
                 
-                if os.path.exists(part_img_path):
+                if part_img_path:
                     st.image(part_img_path, width=120)
                 else:
                     st.warning(f"※画像が見つかりません: images/{item['char_id']}/{item['file']}")
@@ -389,10 +402,10 @@ elif mode == "おもちゃ箱（キャラ保存・図鑑）":
     
     if total_needed_count > 0 and owned_count == total_needed_count:
         char_name = st.text_input("キャラクターの登録名", value=selected_char_info["name"])
-        complete_img_path = os.path.join(IMAGE_DIR, target_char_id, "complete.jpg")
+        complete_img_path = find_existing_image_path(IMAGE_DIR, target_char_id, "complete.jpg")
         
         st.write("### 【完成イラスト】")
-        if os.path.exists(complete_img_path):
+        if complete_img_path:
             st.image(complete_img_path, caption=f"完成カード: {char_name}", width=350)
         else:
             st.warning(f"※画像ファイルが見つかりません: images/{target_char_id}/complete.jpg")
@@ -419,8 +432,9 @@ elif mode == "おもちゃ箱（キャラ保存・図鑑）":
         for idx, c in enumerate(chars):
             with cols[idx % 3]:
                 st.write(f"**No.{idx + 1} {c['name']}**")
-                if os.path.exists(c.get('img_path', '')):
-                    st.image(c['img_path'], use_container_width=True)
+                img_p = find_existing_image_path(c.get('img_path', ''))
+                if img_p:
+                    st.image(img_p, use_container_width=True)
                 else:
                     st.info("画像が見つかりません")
     else:
