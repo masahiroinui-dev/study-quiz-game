@@ -31,7 +31,7 @@ CHARACTERS = [
     {"id": "kappa", "name": "かっぱ"}
 ]
 
-# パーツショップ定義（kappaのパーツは .JPG / .jpg どちらでも探索可能）
+# パーツショップ定義
 SHOP_ITEMS = {
     "head": [
         {"id": "panda_h1", "char_id": "panda", "name": "👑 ぱんだのあたま", "price": 80, "file": "head.jpg"},
@@ -90,11 +90,9 @@ if "user_data" not in st.session_state:
 def find_existing_image_path(*path_segments):
     base_path = os.path.join(*path_segments)
     
-    # 完全一致すればそのまま返す
     if os.path.exists(base_path):
         return base_path
     
-    # 拡張子の大文字・小文字・別拡張子を順番にチェック
     root, _ = os.path.splitext(base_path)
     for ext in ['.JPG', '.jpg', '.JPEG', '.jpeg', '.PNG', '.png', '.WEBP', '.webp']:
         alt_path = root + ext
@@ -119,7 +117,6 @@ def set_full_screen_background(image_filename):
                 background-repeat: no-repeat;
                 background-attachment: fixed;
             }}
-            /* テキスト全体の文字色を黒に固定 */
             .stApp, .stApp p, .stApp h1, .stApp h2, .stApp h3, .stApp span, .stMarkdown, .stTextArea, .stSelectbox, div[data-testid="stMetricValue"] {{
                 color: #000000 !important;
             }}
@@ -128,8 +125,6 @@ def set_full_screen_background(image_filename):
                 padding: 8px;
                 border-radius: 8px;
             }}
-            
-            /* ボタンの配色を明示的に指定（ダークモード対策） */
             .stButton > button {{
                 background-color: #ffffff !important;
                 color: #000000 !important;
@@ -142,7 +137,6 @@ def set_full_screen_background(image_filename):
                 color: #000000 !important;
                 border-color: #000000 !important;
             }}
-            
             div[data-testid="stAlert"] {{
                 background-color: rgba(255, 255, 255, 0.95) !important;
                 color: #000000 !important;
@@ -168,13 +162,9 @@ def load_questions(filepath):
     with open(csv_path, mode="r", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            questions.append(row)
+            if "id" in row and row["id"].strip():
+                questions.append(row)
     return questions
-
-def filter_and_shuffle(questions, start_id, end_id):
-    filtered = [q for q in questions if "id" in q and q["id"].strip().isdigit() and start_id <= int(q["id"].strip()) <= end_id]
-    random.shuffle(filtered)
-    return filtered
 
 # --- B. 判定ロジック ---
 def judge_qa(user_input, correct_str):
@@ -238,26 +228,21 @@ if mode == "クイズに挑戦":
     st.title("⚔️ クイズ＆論述 チャレンジ")
 
     all_questions = load_questions("questions.csv")
-    valid_ids = [int(q["id"].strip()) for q in all_questions if "id" in q and q["id"].strip().isdigit()]
     
     st.sidebar.markdown("---")
-    st.sidebar.header("出題範囲")
-    start_id = st.sidebar.number_input("開始ID", value=min(valid_ids) if valid_ids else 1, step=1)
-    end_id = st.sidebar.number_input("終了ID", value=max(valid_ids) if valid_ids else 294, step=1)
-
-    if st.sidebar.button("ゲームスタート！"):
-        selected_q = filter_and_shuffle(all_questions, start_id, end_id)
-        if selected_q:
-            st.session_state.quiz_list = selected_q
-            st.session_state.current_idx = 0
-            st.session_state.score = 0
-            st.session_state.combo = 0
-            st.session_state.mistakes = 0
-            st.session_state.loop_count = 1
-            st.session_state.game_over = False
-            st.session_state.answered = False
-            st.session_state.pt_saved = False
-            st.rerun()
+    if st.sidebar.button("🎮 ゲームスタート！", use_container_width=True):
+        selected_q = all_questions.copy()
+        random.shuffle(selected_q)
+        st.session_state.quiz_list = selected_q
+        st.session_state.current_idx = 0
+        st.session_state.score = 0
+        st.session_state.combo = 0
+        st.session_state.mistakes = 0
+        st.session_state.loop_count = 1
+        st.session_state.game_over = False
+        st.session_state.answered = False
+        st.session_state.pt_saved = False
+        st.rerun()
 
     if "quiz_list" in st.session_state and st.session_state.quiz_list:
         if st.session_state.mistakes >= MAX_MISTAKES:
