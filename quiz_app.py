@@ -19,7 +19,7 @@ BASE_SCORE = 5            # 正解時の基本獲得ポイント
 # --- ディレクトリ & ファイルパス設定 ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGE_DIR = os.path.join(BASE_DIR, "images")
-QUESTIONS_CSV_PATH = "questions.csv"  # クイズデータファイル名
+QUESTIONS_CSV_PATH = "quiz_questions.csv"  # クイズデータファイル名
 
 # 背景画像ファイル名（images/ 直下に配置）
 QUIZ_SHOP_BG = "bg1.jpg"   # クイズ・ショップ画面用背景
@@ -37,37 +37,37 @@ CHARACTERS = [
 SHOP_ITEMS = {
     "head": [
         {"id": "panda_h1", "char_id": "panda", "name": "👑 ぱんだのあたま", "price": 80, "file": "head.jpg"},
-        {"id": "kappa_h1", "char_id": "kappa", "name": "🥒 かっぱのあたま", "price": 80, "file": "head.JPG"},
+        {"id": "kappa_h1", "char_id": "kappa", "name": "🥒 かっぱのあたま", "price": 80, "file": "head.jpg"},
         {"id": "tengu_h1", "char_id": "tengu", "name": "👺 てんぐのあたま", "price": 80, "file": "head.jpg"}
     ],
     "body": [
         {"id": "panda_b1", "char_id": "panda", "name": "🥋 ぱんだのからだ", "price": 80, "file": "body.jpg"},
         {"id": "broc_b1", "char_id": "broccoli", "name": "🥦 ぶろっこりのからだ", "price": 80, "file": "body.jpg"},
-        {"id": "kappa_b1", "char_id": "kappa", "name": "🥒 かっぱのからだ", "price": 80, "file": "body.JPG"},
+        {"id": "kappa_b1", "char_id": "kappa", "name": "🥒 かっぱのからだ", "price": 80, "file": "body.jpg"},
         {"id": "tengu_b1", "char_id": "tengu", "name": "👺 てんぐのからだ", "price": 80, "file": "body.jpg"}
     ],
     "right_hand": [
         {"id": "panda_rh1", "char_id": "panda", "name": "⚔️ ぱんだのみぎて", "price": 50, "file": "right_hand.jpg"},
         {"id": "broc_rh1", "char_id": "broccoli", "name": "🥊 ぶろっこりのみぎて", "price": 50, "file": "right_hand.jpg"},
-        {"id": "kappa_rh1", "char_id": "kappa", "name": "🥒 かっぱのみぎて", "price": 50, "file": "right_hand.JPG"},
+        {"id": "kappa_rh1", "char_id": "kappa", "name": "🥒 かっぱのみぎて", "price": 50, "file": "right_hand.jpg"},
         {"id": "tengu_rh1", "char_id": "tengu", "name": "🪭 てんぐのみぎて", "price": 50, "file": "right_hand.jpg"}
     ],
     "left_hand": [
         {"id": "panda_lh1", "char_id": "panda", "name": "🛡️ ぱんだのひだりて", "price": 50, "file": "left_hand.jpg"},
         {"id": "broc_lh1", "char_id": "broccoli", "name": "🥊 ぶろっこりのひだりて", "price": 50, "file": "left_hand.jpg"},
-        {"id": "kappa_lh1", "char_id": "kappa", "name": "🥒 かっぱのひだりて", "price": 50, "file": "left_hand.JPG"},
+        {"id": "kappa_lh1", "char_id": "kappa", "name": "🥒 かっぱのひだりて", "price": 50, "file": "left_hand.jpg"},
         {"id": "tengu_lh1", "char_id": "tengu", "name": "👺 てんぐのひだりて", "price": 50, "file": "left_hand.jpg"}
     ],
     "right_leg": [
         {"id": "panda_rl1", "char_id": "panda", "name": "🦵 ぱんだのみぎあし", "price": 50, "file": "right_leg.jpg"},
         {"id": "broc_rl1", "char_id": "broccoli", "name": "🦵 ぶろっこりのみぎあし", "price": 50, "file": "right_leg.jpg"},
-        {"id": "kappa_rl1", "char_id": "kappa", "name": "🥒 かっぱのみぎあし", "price": 50, "file": "right_leg.JPG"},
+        {"id": "kappa_rl1", "char_id": "kappa", "name": "🥒 かっぱのみぎあし", "price": 50, "file": "right_leg.jpg"},
         {"id": "tengu_rl1", "char_id": "tengu", "name": "🩴 てんぐのみぎあし", "price": 50, "file": "right_leg.jpg"}
     ],
     "left_leg": [
         {"id": "panda_ll1", "char_id": "panda", "name": "🦵 ぱんだのひだりあし", "price": 50, "file": "left_leg.jpg"},
         {"id": "broc_ll1", "char_id": "broccoli", "name": "🦵 ぶろっこりのひだりあし", "price": 50, "file": "left_leg.jpg"},
-        {"id": "kappa_ll1", "char_id": "kappa", "name": "🥒 かっぱのひだりあし", "price": 50, "file": "left_leg.JPG"},
+        {"id": "kappa_ll1", "char_id": "kappa", "name": "🥒 かっぱのひだりあし", "price": 50, "file": "left_leg.jpg"},
         {"id": "tengu_ll1", "char_id": "tengu", "name": "🩴 てんぐのひだりあし", "price": 50, "file": "left_leg.jpg"}
     ]
 }
@@ -103,64 +103,80 @@ def find_existing_image_path(*path_segments):
         return base_path
     
     root, _ = os.path.splitext(base_path)
-    for ext in ['.JPG', '.jpg', '.JPEG', '.jpeg', '.PNG', '.png', '.WEBP', '.webp']:
+    for ext in ['.jpg', '.JPG', '.jpeg', '.JPEG', '.png', '.PNG', '.webp', '.WEBP']:
         alt_path = root + ext
         if os.path.exists(alt_path):
             return alt_path
     return None
 
+# --- 安全な画像表示ユーティリティ ---
+def safe_render_image(image_path, width=None, use_container_width=False, caption=None):
+    if not image_path or not os.path.exists(image_path):
+        st.warning(f"※画像が見つかりません: {os.path.basename(image_path) if image_path else ''}")
+        return
+    try:
+        if width:
+            st.image(image_path, width=width, caption=caption)
+        else:
+            st.image(image_path, use_container_width=use_container_width, caption=caption)
+    except Exception as e:
+        st.warning(f"※画像読み込みエラー: {os.path.basename(image_path)}")
+
 # --- 全面背景画像CSS適用関数 ---
 def set_full_screen_background(image_filename):
     image_path = find_existing_image_path(IMAGE_DIR, image_filename)
     if image_path:
-        with open(image_path, "rb") as image_file:
-            encoded_string = base64.b64encode(image_file.read()).decode()
-        st.markdown(
-            f"""
-            <style>
-            .stApp {{
-                background-image: url("data:image/jpeg;base64,{encoded_string}");
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                background-attachment: fixed;
-            }}
-            .stApp, .stApp p, .stApp h1, .stApp h2, .stApp h3, .stApp span, .stMarkdown, .stTextArea, .stSelectbox, div[data-testid="stMetricValue"] {{
-                color: #000000 !important;
-            }}
-            .stMarkdown, .stTextArea, .stSelectbox, div[data-testid="stMetricValue"] {{
-                background-color: rgba(255, 255, 255, 0.85) !important;
-                padding: 8px;
-                border-radius: 8px;
-            }}
-            .stButton > button {{
-                background-color: #ffffff !important;
-                color: #000000 !important;
-                border: 2px solid #333333 !important;
-                font-weight: bold !important;
-                border-radius: 8px !important;
-            }}
-            .stButton > button:hover {{
-                background-color: #f0f0f0 !important;
-                color: #000000 !important;
-                border-color: #000000 !important;
-            }}
-            div[data-testid="stAlert"] {{
-                background-color: rgba(255, 255, 255, 0.95) !important;
-                color: #000000 !important;
-                font-weight: bold !important;
-                font-size: 1.15rem !important;
-                border: 2px solid #333333 !important;
-                border-radius: 10px;
-            }}
-            div[data-testid="stAlert"] p {{
-                color: #000000 !important;
-                font-weight: bold !important;
-            }}
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
+        try:
+            with open(image_path, "rb") as image_file:
+                encoded_string = base64.b64encode(image_file.read()).decode()
+            st.markdown(
+                f"""
+                <style>
+                .stApp {{
+                    background-image: url("data:image/jpeg;base64,{encoded_string}");
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-attachment: fixed;
+                }}
+                .stApp, .stApp p, .stApp h1, .stApp h2, .stApp h3, .stApp span, .stMarkdown, .stTextArea, .stSelectbox, div[data-testid="stMetricValue"] {{
+                    color: #000000 !important;
+                }}
+                .stMarkdown, .stTextArea, .stSelectbox, div[data-testid="stMetricValue"] {{
+                    background-color: rgba(255, 255, 255, 0.85) !important;
+                    padding: 8px;
+                    border-radius: 8px;
+                }}
+                .stButton > button {{
+                    background-color: #ffffff !important;
+                    color: #000000 !important;
+                    border: 2px solid #333333 !important;
+                    font-weight: bold !important;
+                    border-radius: 8px !important;
+                }}
+                .stButton > button:hover {{
+                    background-color: #f0f0f0 !important;
+                    color: #000000 !important;
+                    border-color: #000000 !important;
+                }}
+                div[data-testid="stAlert"] {{
+                    background-color: rgba(255, 255, 255, 0.95) !important;
+                    color: #000000 !important;
+                    font-weight: bold !important;
+                    font-size: 1.15rem !important;
+                    border: 2px solid #333333 !important;
+                    border-radius: 10px;
+                }}
+                div[data-testid="stAlert"] p {{
+                    color: #000000 !important;
+                    font-weight: bold !important;
+                }}
+                </style>
+                """,
+                unsafe_allow_html=True
+            )
+        except Exception:
+            pass
 
 # --- A. クイズCSVデータ読み込み関数 ---
 @st.cache_data
@@ -393,10 +409,8 @@ elif mode == "ショップ":
                 
                 part_img_path = find_existing_image_path(IMAGE_DIR, item["char_id"], item["file"])
                 
-                if part_img_path:
-                    st.image(part_img_path, width=120)
-                else:
-                    st.warning(f"※画像が見つかりません: images/{item['char_id']}/{item['file']}")
+                # 安全な画像表示（エラー回避）
+                safe_render_image(part_img_path, width=120)
                 
                 st.write(f"**{char_label}{item['name']}**")
                 st.write(f"価格: {item['price']} Pt")
@@ -438,13 +452,10 @@ elif mode == "おもちゃ箱（キャラ保存・図鑑）":
     
     if total_needed_count > 0 and owned_count == total_needed_count:
         char_name = st.text_input("キャラクターの登録名", value=selected_char_info["name"])
-        complete_img_path = find_existing_image_path(IMAGE_DIR, target_char_id, "complete.JPG")
+        complete_img_path = find_existing_image_path(IMAGE_DIR, target_char_id, "complete.jpg")
         
         st.write("### 【完成イラスト】")
-        if complete_img_path:
-            st.image(complete_img_path, caption=f"完成カード: {char_name}", width=350)
-        else:
-            st.warning(f"※画像ファイルが見つかりません: images/{target_char_id}/complete.JPG")
+        safe_render_image(complete_img_path, width=350, caption=f"完成カード: {char_name}")
             
         if st.button("この完成品を図鑑に保存！"):
             new_char = {
@@ -469,9 +480,6 @@ elif mode == "おもちゃ箱（キャラ保存・図鑑）":
             with cols[idx % 3]:
                 st.write(f"**No.{idx + 1} {c['name']}**")
                 img_p = find_existing_image_path(c.get('img_path', ''))
-                if img_p:
-                    st.image(img_p, use_container_width=True)
-                else:
-                    st.info("画像が見つかりません")
+                safe_render_image(img_p, use_container_width=True)
     else:
         st.write("まだ保存されたキャラクターはありません。")
