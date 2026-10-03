@@ -25,50 +25,57 @@ QUESTIONS_CSV_PATH = "quiz_questions.csv"  # クイズデータファイル名
 QUIZ_SHOP_BG = "bg1.jpg"   # クイズ・ショップ画面用背景
 COMPLETED_BG = "bg2.jpg"   # おもちゃ箱画面用背景
 
-# --- キャラクター定義（全4種） ---
+# --- キャラクター定義（全5種：サルを追加） ---
 CHARACTERS = [
     {"id": "panda", "name": "ぱんだ"},
     {"id": "broccoli", "name": "ぶろっこり"},
     {"id": "kappa", "name": "かっぱ"},
-    {"id": "tengu", "name": "てんぐ"}
+    {"id": "tengu", "name": "てんぐ"},
+    {"id": "saru", "name": "さる"}  # ★ サルを追加
 ]
 
-# --- パーツショップ定義 ---
+# --- パーツショップ定義（各部位にサルのパーツを追加） ---
 SHOP_ITEMS = {
     "head": [
         {"id": "panda_h1", "char_id": "panda", "name": "👑 ぱんだのあたま", "price": 80, "file": "head.jpg"},
         {"id": "kappa_h1", "char_id": "kappa", "name": "🥒 かっぱのあたま", "price": 80, "file": "head.jpg"},
-        {"id": "tengu_h1", "char_id": "tengu", "name": "👺 てんぐのあたま", "price": 80, "file": "head.jpg"}
+        {"id": "tengu_h1", "char_id": "tengu", "name": "👺 てんぐのあたま", "price": 80, "file": "head.jpg"},
+        {"id": "saru_h1", "char_id": "saru", "name": "🐵 さるのあたま", "price": 80, "file": "head.jpg"}
     ],
     "body": [
         {"id": "panda_b1", "char_id": "panda", "name": "🥋 ぱんだのからだ", "price": 80, "file": "body.jpg"},
         {"id": "broc_b1", "char_id": "broccoli", "name": "🥦 ぶろっこりのからだ", "price": 80, "file": "body.jpg"},
         {"id": "kappa_b1", "char_id": "kappa", "name": "🥒 かっぱのからだ", "price": 80, "file": "body.jpg"},
-        {"id": "tengu_b1", "char_id": "tengu", "name": "👺 てんぐのからだ", "price": 80, "file": "body.jpg"}
+        {"id": "tengu_b1", "char_id": "tengu", "name": "👺 てんぐのからだ", "price": 80, "file": "body.jpg"},
+        {"id": "saru_b1", "char_id": "saru", "name": "🐵 さるのからだ", "price": 80, "file": "body.jpg"}
     ],
     "right_hand": [
         {"id": "panda_rh1", "char_id": "panda", "name": "⚔️ ぱんだのみぎて", "price": 50, "file": "right_hand.jpg"},
         {"id": "broc_rh1", "char_id": "broccoli", "name": "🥊 ぶろっこりのみぎて", "price": 50, "file": "right_hand.jpg"},
         {"id": "kappa_rh1", "char_id": "kappa", "name": "🥒 かっぱのみぎて", "price": 50, "file": "right_hand.jpg"},
-        {"id": "tengu_rh1", "char_id": "tengu", "name": "🪭 てんぐのみぎて", "price": 50, "file": "right_hand.jpg"}
+        {"id": "tengu_rh1", "char_id": "tengu", "name": "🪭 てんぐのみぎて", "price": 50, "file": "right_hand.jpg"},
+        {"id": "saru_rh1", "char_id": "saru", "name": "🍌 さるのみぎて", "price": 50, "file": "right_hand.jpg"}
     ],
     "left_hand": [
         {"id": "panda_lh1", "char_id": "panda", "name": "🛡️ ぱんだのひだりて", "price": 50, "file": "left_hand.jpg"},
         {"id": "broc_lh1", "char_id": "broccoli", "name": "🥊 ぶろっこりのひだりて", "price": 50, "file": "left_hand.jpg"},
         {"id": "kappa_lh1", "char_id": "kappa", "name": "🥒 かっぱのひだりて", "price": 50, "file": "left_hand.jpg"},
-        {"id": "tengu_lh1", "char_id": "tengu", "name": "👺 てんぐのひだりて", "price": 50, "file": "left_hand.jpg"}
+        {"id": "tengu_lh1", "char_id": "tengu", "name": "👺 てんぐのひだりて", "price": 50, "file": "left_hand.jpg"},
+        {"id": "saru_lh1", "char_id": "saru", "name": "🍌 さるのひだりて", "price": 50, "file": "left_hand.jpg"}
     ],
     "right_leg": [
         {"id": "panda_rl1", "char_id": "panda", "name": "🦵 ぱんだのみぎあし", "price": 50, "file": "right_leg.jpg"},
         {"id": "broc_rl1", "char_id": "broccoli", "name": "🦵 ぶろっこりのみぎあし", "price": 50, "file": "right_leg.jpg"},
         {"id": "kappa_rl1", "char_id": "kappa", "name": "🥒 かっぱのみぎあし", "price": 50, "file": "right_leg.jpg"},
-        {"id": "tengu_rl1", "char_id": "tengu", "name": "🩴 てんぐのみぎあし", "price": 50, "file": "right_leg.jpg"}
+        {"id": "tengu_rl1", "char_id": "tengu", "name": "🩴 てんぐのみぎあし", "price": 50, "file": "right_leg.jpg"},
+        {"id": "saru_rl1", "char_id": "saru", "name": "🦵 さるのみぎあし", "price": 50, "file": "right_leg.jpg"}
     ],
     "left_leg": [
         {"id": "panda_ll1", "char_id": "panda", "name": "🦵 ぱんだのひだりあし", "price": 50, "file": "left_leg.jpg"},
         {"id": "broc_ll1", "char_id": "broccoli", "name": "🦵 ぶろっこりのひだりあし", "price": 50, "file": "left_leg.jpg"},
         {"id": "kappa_ll1", "char_id": "kappa", "name": "🥒 かっぱのひだりあし", "price": 50, "file": "left_leg.jpg"},
-        {"id": "tengu_ll1", "char_id": "tengu", "name": "🩴 てんぐのひだりあし", "price": 50, "file": "left_leg.jpg"}
+        {"id": "tengu_ll1", "char_id": "tengu", "name": "🩴 てんぐのひだりあし", "price": 50, "file": "left_leg.jpg"},
+        {"id": "saru_ll1", "char_id": "saru", "name": "🦵 さるのひだりあし", "price": 50, "file": "left_leg.jpg"}
     ]
 }
 
