@@ -12,9 +12,12 @@ from streamlit_local_storage import LocalStorage
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-# --- 基本設定パラメータ ---
-MAX_MISTAKES = 3          # 最大誤答数（3回でゲームオーバー）
-BASE_SCORE = 5            # 正解時の基本獲得ポイント
+# ==============================================================================
+# ★ 1. クイズ設定・基本パラメータ（ここを変更して1周あたりの問題数を調整できます）
+# ==============================================================================
+MAX_MISTAKES = 3                # 最大誤答数（3回でゲームオーバー）
+BASE_SCORE = 5                  # 正解時の基本獲得ポイント
+TOTAL_QUIZ_COUNT = 10           # ★ 1周あたりの出題数（ここを好きな数字に変更してください。None にするとCSVの全問題を出題）
 
 # --- ディレクトリ & ファイルパス設定 ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -25,59 +28,61 @@ QUESTIONS_CSV_PATH = "quiz_questions.csv"  # クイズデータファイル名
 QUIZ_SHOP_BG = "bg1.jpg"   # クイズ・ショップ画面用背景
 COMPLETED_BG = "bg2.jpg"   # おもちゃ箱画面用背景
 
-# --- キャラクター定義（全5種：サルを追加） ---
+# ==============================================================================
+# ★ 2. キャラクター＆ショップ定義（新キャラ追加はここを編集するだけでOK！）
+# ==============================================================================
+# 新しいキャラクターを追加する場合は、以下のリストに辞書を追加し、
+# images/{id}/ フォルダ内に各部位の画像（head.jpg, body.jpg, right_hand.jpg, left_hand.jpg, right_leg.jpg, left_leg.jpg, complete.jpg）を配置してください。
+# ※特定の部位が存在しないキャラ（ぶろっこりの頭など）は "exclude_parts": ["head"] のように指定できます。
+
 CHARACTERS = [
-    {"id": "panda", "name": "ぱんだ"},
-    {"id": "broccoli", "name": "ぶろっこり"},
-    {"id": "kappa", "name": "かっぱ"},
-    {"id": "tengu", "name": "てんぐ"},
-    {"id": "saru", "name": "さる"}  # ★ サルを追加
+    {"id": "panda", "name": "ぱんだ", "emoji": "👑"},
+    {"id": "broccoli", "name": "ぶろっこり", "emoji": "🥦", "exclude_parts": ["head"]},
+    {"id": "kappa", "name": "かっぱ", "emoji": "🥒"},
+    {"id": "tengu", "name": "てんぐ", "emoji": "👺"},
+    {"id": "saru", "name": "さる", "emoji": "🐵"},
+    {"id": "buru", "name": "ブルさん", "emoji": "🐶"},
+    {"id": "daruma", "name": "だるま", "emoji": "　"},
+    {"id": "kinoko", "name": "キノコ", "emoji": "🍄"},
+    {"id": "megami", "name": "めがみ", "emoji": "🗽"},
+    {"id": "katteni", "name": "スター", "emoji": "🎤"},
+
+    # --- 新キャラ追加例（コメントを外して使えます） ---
+    # {"id": "usagi", "name": "うさぎ", "emoji": "🐰"},
 ]
 
-# --- パーツショップ定義（各部位にサルのパーツを追加） ---
-SHOP_ITEMS = {
-    "head": [
-        {"id": "panda_h1", "char_id": "panda", "name": "👑 ぱんだのあたま", "price": 80, "file": "head.jpg"},
-        {"id": "kappa_h1", "char_id": "kappa", "name": "🥒 かっぱのあたま", "price": 80, "file": "head.jpg"},
-        {"id": "tengu_h1", "char_id": "tengu", "name": "👺 てんぐのあたま", "price": 80, "file": "head.jpg"},
-        {"id": "saru_h1", "char_id": "saru", "name": "🐵 さるのあたま", "price": 80, "file": "head.jpg"}
-    ],
-    "body": [
-        {"id": "panda_b1", "char_id": "panda", "name": "🥋 ぱんだのからだ", "price": 80, "file": "body.jpg"},
-        {"id": "broc_b1", "char_id": "broccoli", "name": "🥦 ぶろっこりのからだ", "price": 80, "file": "body.jpg"},
-        {"id": "kappa_b1", "char_id": "kappa", "name": "🥒 かっぱのからだ", "price": 80, "file": "body.jpg"},
-        {"id": "tengu_b1", "char_id": "tengu", "name": "👺 てんぐのからだ", "price": 80, "file": "body.jpg"},
-        {"id": "saru_b1", "char_id": "saru", "name": "🐵 さるのからだ", "price": 80, "file": "body.jpg"}
-    ],
-    "right_hand": [
-        {"id": "panda_rh1", "char_id": "panda", "name": "⚔️ ぱんだのみぎて", "price": 50, "file": "right_hand.jpg"},
-        {"id": "broc_rh1", "char_id": "broccoli", "name": "🥊 ぶろっこりのみぎて", "price": 50, "file": "right_hand.jpg"},
-        {"id": "kappa_rh1", "char_id": "kappa", "name": "🥒 かっぱのみぎて", "price": 50, "file": "right_hand.jpg"},
-        {"id": "tengu_rh1", "char_id": "tengu", "name": "🪭 てんぐのみぎて", "price": 50, "file": "right_hand.jpg"},
-        {"id": "saru_rh1", "char_id": "saru", "name": "🍌 さるのみぎて", "price": 50, "file": "right_hand.jpg"}
-    ],
-    "left_hand": [
-        {"id": "panda_lh1", "char_id": "panda", "name": "🛡️ ぱんだのひだりて", "price": 50, "file": "left_hand.jpg"},
-        {"id": "broc_lh1", "char_id": "broccoli", "name": "🥊 ぶろっこりのひだりて", "price": 50, "file": "left_hand.jpg"},
-        {"id": "kappa_lh1", "char_id": "kappa", "name": "🥒 かっぱのひだりて", "price": 50, "file": "left_hand.jpg"},
-        {"id": "tengu_lh1", "char_id": "tengu", "name": "👺 てんぐのひだりて", "price": 50, "file": "left_hand.jpg"},
-        {"id": "saru_lh1", "char_id": "saru", "name": "🍌 さるのひだりて", "price": 50, "file": "left_hand.jpg"}
-    ],
-    "right_leg": [
-        {"id": "panda_rl1", "char_id": "panda", "name": "🦵 ぱんだのみぎあし", "price": 50, "file": "right_leg.jpg"},
-        {"id": "broc_rl1", "char_id": "broccoli", "name": "🦵 ぶろっこりのみぎあし", "price": 50, "file": "right_leg.jpg"},
-        {"id": "kappa_rl1", "char_id": "kappa", "name": "🥒 かっぱのみぎあし", "price": 50, "file": "right_leg.jpg"},
-        {"id": "tengu_rl1", "char_id": "tengu", "name": "🩴 てんぐのみぎあし", "price": 50, "file": "right_leg.jpg"},
-        {"id": "saru_rl1", "char_id": "saru", "name": "🦵 さるのみぎあし", "price": 50, "file": "right_leg.jpg"}
-    ],
-    "left_leg": [
-        {"id": "panda_ll1", "char_id": "panda", "name": "🦵 ぱんだのひだりあし", "price": 50, "file": "left_leg.jpg"},
-        {"id": "broc_ll1", "char_id": "broccoli", "name": "🦵 ぶろっこりのひだりあし", "price": 50, "file": "left_leg.jpg"},
-        {"id": "kappa_ll1", "char_id": "kappa", "name": "🥒 かっぱのひだりあし", "price": 50, "file": "left_leg.jpg"},
-        {"id": "tengu_ll1", "char_id": "tengu", "name": "🩴 てんぐのひだりあし", "price": 50, "file": "left_leg.jpg"},
-        {"id": "saru_ll1", "char_id": "saru", "name": "🦵 さるのひだりあし", "price": 50, "file": "left_leg.jpg"}
-    ]
+# 部位のマスター定義（価格やファイル名を一元管理）
+PART_TEMPLATES = {
+    "head":       {"label": "あたま",   "price": 80, "file": "head.jpg"},
+    "body":       {"label": "からだ",   "price": 80, "file": "body.jpg"},
+    "right_hand": {"label": "みぎて",   "price": 50, "file": "right_hand.jpg"},
+    "left_hand":  {"label": "ひだりて", "price": 50, "file": "left_hand.jpg"},
+    "right_leg":  {"label": "みぎあし", "price": 50, "file": "right_leg.jpg"},
+    "left_leg":   {"label": "ひだりあし", "price": 50, "file": "left_leg.jpg"},
 }
+
+# CHARACTERS の定義から SHOP_ITEMS を自動生成する関数
+def build_shop_items():
+    shop = {part_key: [] for part_key in PART_TEMPLATES.keys()}
+    for char in CHARACTERS:
+        char_id = char["id"]
+        char_name = char["name"]
+        emoji = char.get("emoji", "✨")
+        excluded = char.get("exclude_parts", [])
+        
+        for part_key, p_info in PART_TEMPLATES.items():
+            if part_key in excluded:
+                continue
+            shop[part_key].append({
+                "id": f"{char_id}_{part_key}",
+                "char_id": char_id,
+                "name": f"{emoji} {char_name}の{p_info['label']}",
+                "price": p_info["price"],
+                "file": p_info["file"]
+            })
+    return shop
+
+SHOP_ITEMS = build_shop_items()
 
 # --- ブラウザ（ローカルストレージ）セーブ・ロード関数 ---
 local_storage = LocalStorage()
@@ -126,7 +131,7 @@ def safe_render_image(image_path, width=None, use_container_width=False, caption
             st.image(image_path, width=width, caption=caption)
         else:
             st.image(image_path, use_container_width=use_container_width, caption=caption)
-    except Exception as e:
+    except Exception:
         st.warning(f"※画像読み込みエラー: {os.path.basename(image_path)}")
 
 # --- 全面背景画像CSS適用関数 ---
@@ -267,11 +272,17 @@ if mode == "クイズに挑戦":
     st.title("⚔️ クイズ＆論述 チャレンジ")
 
     all_questions = load_questions(QUESTIONS_CSV_PATH)
+    total_csv_count = len(all_questions)
     
+    # コード上で設定された問題数（TOTAL_QUIZ_COUNT）を決定
+    if TOTAL_QUIZ_COUNT is not None and TOTAL_QUIZ_COUNT > 0:
+        session_quiz_count = min(TOTAL_QUIZ_COUNT, total_csv_count)
+    else:
+        session_quiz_count = total_csv_count
+
     st.sidebar.markdown("---")
-    if st.sidebar.button("🎮 ゲームスタート！", use_container_width=True):
-        selected_q = all_questions.copy()
-        random.shuffle(selected_q)
+    if st.sidebar.button("🎮 ゲームスタート！", use_container_width=True, disabled=(total_csv_count == 0)):
+        selected_q = random.sample(all_questions, session_quiz_count)
         st.session_state.quiz_list = selected_q
         st.session_state.current_idx = 0
         st.session_state.score = 0
@@ -290,7 +301,8 @@ if mode == "クイズに挑戦":
         if not st.session_state.game_over and st.session_state.current_idx >= len(st.session_state.quiz_list):
             st.session_state.loop_count += 1
             st.session_state.current_idx = 0
-            random.shuffle(st.session_state.quiz_list)
+            # 次の周回でも設定された問題数で再抽選
+            st.session_state.quiz_list = random.sample(all_questions, session_quiz_count)
             st.toast(f"🎉 1周クリア！ {st.session_state.loop_count}周目に入ります！", icon="🔄")
 
         if not st.session_state.game_over:
@@ -415,8 +427,6 @@ elif mode == "ショップ":
                         char_label = f"[{c_info['name']}] "
                 
                 part_img_path = find_existing_image_path(IMAGE_DIR, item["char_id"], item["file"])
-                
-                # 安全な画像表示（エラー回避）
                 safe_render_image(part_img_path, width=120)
                 
                 st.write(f"**{char_label}{item['name']}**")
